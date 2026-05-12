@@ -1,0 +1,54 @@
+# render.yaml — Render Blueprint for deploying the LLM Gateway
+# Two services: FastAPI (API) + Streamlit (Dashboard)
+
+services:
+  # --- FastAPI Backend (the actual gateway API) ---
+  - type: web
+    name: llm-gateway-api
+    runtime: python
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn gateway.main:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: PYTHON_VERSION
+        value: "3.12"
+      - key: GATEWAY_CONFIG_DIR
+        value: /tmp/data
+      # Add your API keys here or in the Render dashboard
+      - key: GROQ_API_KEY
+        sync: false
+      - key: HUGGINGFACE_API_KEY
+        sync: false
+      - key: TOGETHER_API_KEY
+        sync: false
+      - key: CEREBRAS_API_KEY
+        sync: false
+      - key: GOOGLE_API_KEY
+        sync: false
+      - key: MISTRAL_API_KEY
+        sync: false
+      - key: OPENROUTER_API_KEY
+        sync: false
+      - key: OPENAI_API_KEY
+        sync: false
+      - key: ANTHROPIC_API_KEY
+        sync: false
+      - key: COHERE_API_KEY
+        sync: false
+
+  # --- Streamlit Dashboard ---
+  - type: web
+    name: llm-gateway-dashboard
+    runtime: python
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: streamlit run streamlit_app.py --server.port $PORT --server.headless true --server.address 0.0.0.0
+    envVars:
+      - key: PYTHON_VERSION
+        value: "3.12"
+      # This must point to the FastAPI service URL once deployed
+      - key: GATEWAY_API_URL
+        fromService:
+          name: llm-gateway-api
+          type: web
+          property: hostport

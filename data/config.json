@@ -1,0 +1,215 @@
+{
+  "cache_ttl": 3600,
+  "cache_enabled": true,
+  "max_failover_attempts": 5,
+  "providers": {
+    "groq": {
+      "id": "groq",
+      "name": "Groq",
+      "enabled": true,
+      "priority": 1,
+      "tier": "free",
+      "base_url": "https://api.groq.com/openai/v1",
+      "models": [
+        "llama-3.3-70b-versatile",
+        "llama-3.1-8b-instant",
+        "llama-3.2-1b-preview",
+        "llama-3.2-3b-preview",
+        "gemma2-9b-it",
+        "mixtral-8x7b-32768"
+      ],
+      "selected_model": "llama-3.3-70b-versatile",
+      "max_retries": 2,
+      "timeout": 60,
+      "rate_limit_rpm": 30
+    },
+    "huggingface": {
+      "id": "huggingface",
+      "name": "Hugging Face",
+      "enabled": true,
+      "priority": 2,
+      "tier": "free",
+      "base_url": "https://api-inference.huggingface.co/models",
+      "models": [
+        "mistralai/Mistral-7B-Instruct-v0.3",
+        "meta-llama/Meta-Llama-3-8B-Instruct",
+        "google/gemma-2-2b-it",
+        "HuggingFaceH4/zephyr-7b-beta",
+        "microsoft/Phi-3-mini-4k-instruct"
+      ],
+      "selected_model": "mistralai/Mistral-7B-Instruct-v0.3",
+      "max_retries": 2,
+      "timeout": 60,
+      "rate_limit_rpm": 60
+    },
+    "together": {
+      "id": "together",
+      "name": "Together AI",
+      "enabled": true,
+      "priority": 3,
+      "tier": "free",
+      "base_url": "https://api.together.xyz/v1",
+      "models": [
+        "meta-llama/Llama-3.3-70B-Instruct-Turbo",
+        "meta-llama/Meta-Llama-3.1-8B-Instruct-Turbo",
+        "mistralai/Mixtral-8x7B-Instruct-v0.1",
+        "google/gemma-2-9b-it",
+        "Qwen/Qwen2.5-7B-Instruct-Turbo"
+      ],
+      "selected_model": "meta-llama/Llama-3.3-70B-Instruct-Turbo",
+      "max_retries": 2,
+      "timeout": 60,
+      "rate_limit_rpm": 60
+    },
+    "cerebras": {
+      "id": "cerebras",
+      "name": "Cerebras",
+      "enabled": true,
+      "priority": 4,
+      "tier": "free",
+      "base_url": "https://api.cerebras.ai/v1",
+      "models": [
+        "llama-3.3-70b",
+        "llama-3.1-8b",
+        "llama-3.1-70b"
+      ],
+      "selected_model": "llama-3.3-70b",
+      "max_retries": 2,
+      "timeout": 60,
+      "rate_limit_rpm": 30
+    },
+    "google": {
+      "id": "google",
+      "name": "Google Gemini",
+      "enabled": true,
+      "priority": 5,
+      "tier": "free",
+      "base_url": "https://generativelanguage.googleapis.com/v1beta",
+      "models": [
+        "gemini-2.0-flash",
+        "gemini-1.5-flash",
+        "gemini-1.5-pro"
+      ],
+      "selected_model": "gemini-2.0-flash",
+      "max_retries": 2,
+      "timeout": 60,
+      "rate_limit_rpm": 15
+    },
+    "mistral": {
+      "id": "mistral",
+      "name": "Mistral",
+      "enabled": true,
+      "priority": 6,
+      "tier": "free",
+      "base_url": "https://api.mistral.ai/v1",
+      "models": [
+        "mistral-small-latest",
+        "mistral-medium-latest",
+        "mistral-large-latest",
+        "open-mistral-7b",
+        "open-mixtral-8x7b",
+        "open-mixtral-8x22b"
+      ],
+      "selected_model": "mistral-small-latest",
+      "max_retries": 2,
+      "timeout": 60,
+      "rate_limit_rpm": 60
+    },
+    "openrouter": {
+      "id": "openrouter",
+      "name": "OpenRouter",
+      "enabled": true,
+      "priority": 7,
+      "tier": "free",
+      "base_url": "https://openrouter.ai/api/v1",
+      "models": [
+        "meta-llama/llama-3.3-70b-instruct:free",
+        "google/gemma-2-9b-it:free",
+        "mistralai/mistral-7b-instruct:free",
+        "qwen/qwen-2.5-72b-instruct:free",
+        "deepseek/deepseek-r1:free",
+        "microsoft/phi-3-mini-128k-instruct:free"
+      ],
+      "selected_model": "meta-llama/llama-3.3-70b-instruct:free",
+      "max_retries": 2,
+      "timeout": 60,
+      "rate_limit_rpm": 20
+    },
+    "ollama": {
+      "id": "ollama",
+      "name": "Ollama (Local)",
+      "enabled": true,
+      "priority": 8,
+      "tier": "free",
+      "base_url": "http://localhost:11434",
+      "models": [
+        "llama3.2",
+        "llama3.1",
+        "mistral",
+        "gemma2",
+        "phi3",
+        "qwen2.5"
+      ],
+      "selected_model": "llama3.2",
+      "max_retries": 2,
+      "timeout": 60,
+      "rate_limit_rpm": null
+    },
+    "openai": {
+      "id": "openai",
+      "name": "OpenAI",
+      "enabled": true,
+      "priority": 1,
+      "tier": "paid",
+      "base_url": "https://api.openai.com/v1",
+      "models": [
+        "gpt-4o",
+        "gpt-4o-mini",
+        "gpt-4-turbo",
+        "gpt-4",
+        "gpt-3.5-turbo",
+        "o1-preview",
+        "o1-mini"
+      ],
+      "selected_model": "gpt-4o-mini",
+      "max_retries": 2,
+      "timeout": 60,
+      "rate_limit_rpm": 60
+    },
+    "anthropic": {
+      "id": "anthropic",
+      "name": "Anthropic",
+      "enabled": true,
+      "priority": 2,
+      "tier": "paid",
+      "base_url": "https://api.anthropic.com/v1",
+      "models": [
+        "claude-sonnet-4-20250514",
+        "claude-3-5-haiku-20241022",
+        "claude-3-opus-20240229"
+      ],
+      "selected_model": "claude-sonnet-4-20250514",
+      "max_retries": 2,
+      "timeout": 60,
+      "rate_limit_rpm": 60
+    },
+    "cohere": {
+      "id": "cohere",
+      "name": "Cohere",
+      "enabled": true,
+      "priority": 3,
+      "tier": "paid",
+      "base_url": "https://api.cohere.ai/v2",
+      "models": [
+        "command-r-plus",
+        "command-r",
+        "command",
+        "command-light"
+      ],
+      "selected_model": "command-r",
+      "max_retries": 2,
+      "timeout": 60,
+      "rate_limit_rpm": 60
+    }
+  }
+}
