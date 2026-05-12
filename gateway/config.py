@@ -77,7 +77,7 @@ DEFAULT_PROVIDERS: dict[str, dict] = {
             "HuggingFaceH4/zephyr-7b-beta",
             "microsoft/Phi-3-mini-4k-instruct",
         ],
-        "selected_model": "mistralai/Mistral-7B-Instruct-v0.3",
+        "selected_model": "meta-llama/Meta-Llama-3-8B-Instruct",
         "rate_limit_rpm": 60,
     },
     "together": {
@@ -118,7 +118,7 @@ DEFAULT_PROVIDERS: dict[str, dict] = {
             "gemini-1.5-flash",
             "gemini-1.5-pro",
         ],
-        "selected_model": "gemini-2.0-flash",
+        "selected_model": "gemini-1.5-pro",
         "rate_limit_rpm": 15,
     },
     "mistral": {
@@ -134,7 +134,7 @@ DEFAULT_PROVIDERS: dict[str, dict] = {
             "open-mixtral-8x7b",
             "open-mixtral-8x22b",
         ],
-        "selected_model": "mistral-small-latest",
+        "selected_model": "mistral-large-latest",
         "rate_limit_rpm": 60,
     },
     "openrouter": {
@@ -150,7 +150,7 @@ DEFAULT_PROVIDERS: dict[str, dict] = {
             "deepseek/deepseek-r1:free",
             "microsoft/phi-3-mini-128k-instruct:free",
         ],
-        "selected_model": "meta-llama/llama-3.3-70b-instruct:free",
+        "selected_model": "deepseek/deepseek-r1:free",
         "rate_limit_rpm": 20,
     },
     "ollama": {
@@ -166,7 +166,7 @@ DEFAULT_PROVIDERS: dict[str, dict] = {
             "phi3",
             "qwen2.5",
         ],
-        "selected_model": "llama3.2",
+        "selected_model": "gemma2",
         "rate_limit_rpm": None,
     },
     "openai": {
@@ -183,7 +183,7 @@ DEFAULT_PROVIDERS: dict[str, dict] = {
             "o1-preview",
             "o1-mini",
         ],
-        "selected_model": "gpt-4o-mini",
+        "selected_model": "gpt-4o",
         "rate_limit_rpm": 60,
     },
     "anthropic": {
@@ -196,7 +196,7 @@ DEFAULT_PROVIDERS: dict[str, dict] = {
             "claude-3-5-haiku-20241022",
             "claude-3-opus-20240229",
         ],
-        "selected_model": "claude-sonnet-4-20250514",
+        "selected_model": "claude-3-opus-20240229",
         "rate_limit_rpm": 60,
     },
     "cohere": {
