@@ -36,7 +36,7 @@ class GatewayConfig(BaseModel):
     providers: dict[str, ProviderConfig] = Field(default_factory=dict)
     cache_ttl: int = 3600  # Cache TTL in seconds
     cache_enabled: bool = True
-    max_failover_attempts: int = 5
+    max_failover_attempts: int = 20
     log_level: str = "INFO"
 
     def get_ordered_providers(self) -> list[ProviderConfig]:

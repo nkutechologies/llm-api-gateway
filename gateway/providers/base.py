@@ -112,6 +112,10 @@ class BaseProvider(ABC):
             raise RateLimitError(f"HTTP 429: {body[:200]}")
         elif status == 413 or "token" in body.lower():
             raise TokenLimitError(f"HTTP {status}: {body[:200]}")
+        elif status == 404 and ("model" in body.lower() or "not found" in body.lower()):
+            raise ProviderError(f"Model not found: {body[:200]}", status="model_error", retryable=False)
+        elif status == 400 and ("api key" in body.lower() or "invalid" in body.lower()):
+            raise AuthenticationError(f"HTTP {status}: {body[:200]}")
         elif status >= 500:
             raise ProviderError(f"Server error {status}: {body[:200]}", retryable=True)
         else:

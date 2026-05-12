@@ -154,10 +154,10 @@ class FailoverOrchestrator:
             if attempts >= self.config.max_failover_attempts:
                 break
 
-            attempts += 1
             provider = None
             try:
                 provider = _create_provider(provider_config)
+                attempts += 1
                 response_text, attempt_log = await provider.generate(
                     prompt, max_tokens, temperature
                 )
@@ -186,7 +186,7 @@ class FailoverOrchestrator:
                 }
 
             except AuthenticationError as e:
-                # Don't retry auth errors — skip to next provider
+                # Don't retry auth errors and don't count against attempt limit
                 attempt_log = APIAttemptLog(
                     timestamp=time.time(),
                     provider=provider_config.name,
@@ -198,6 +198,7 @@ class FailoverOrchestrator:
                 gateway_logger.log_attempt(attempt_log)
                 failover_log.attempts.append(attempt_log)
                 last_error = str(e)
+                attempts -= 1  # Don't count auth failures against limit
 
             except RateLimitError as e:
                 attempt_log = APIAttemptLog(
