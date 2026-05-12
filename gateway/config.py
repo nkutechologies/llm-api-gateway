@@ -378,3 +378,11 @@ def update_api_key(provider_id: str, api_key: str, config: GatewayConfig) -> Gat
         config.providers[provider_id].api_key = api_key
         save_config(config)
     return config
+
+
+def remove_api_key(provider_id: str, config: GatewayConfig) -> GatewayConfig:
+    """Remove a provider's API key."""
+    if provider_id in config.providers:
+        config.providers[provider_id].api_key = None
+        save_config(config)
+    return config

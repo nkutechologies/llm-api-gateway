@@ -82,6 +82,13 @@ if providers:
                             st.rerun()
                     else:
                         st.warning("Enter a key first")
+
+                if p["has_key"]:
+                    if st.button("🗑️ Remove Key", key=f"remove_{p['id']}", type="secondary"):
+                        result = api_post("/providers/key/remove", {"provider": p["id"]})
+                        if "error" not in result:
+                            st.success("Key removed!")
+                            st.rerun()
             else:
                 st.info("Ollama runs locally — no API key needed")
 

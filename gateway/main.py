@@ -10,7 +10,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
 from typing import Optional
 
-from gateway.config import load_config, save_config, update_api_key, GatewayConfig
+from gateway.config import load_config, save_config, update_api_key, remove_api_key, GatewayConfig
 from gateway.failover import FailoverOrchestrator
 from gateway.logger import gateway_logger
 
@@ -37,6 +37,10 @@ class GenerateResponse(BaseModel):
 class UpdateKeyRequest(BaseModel):
     provider: str
     api_key: str = Field(..., min_length=1)
+
+
+class RemoveKeyRequest(BaseModel):
+    provider: str
 
 
 class ToggleProviderRequest(BaseModel):
@@ -126,6 +130,17 @@ async def set_api_key(req: UpdateKeyRequest):
     if req.provider not in _config.providers:
         raise HTTPException(status_code=404, detail=f"Provider '{req.provider}' not found")
     _config = update_api_key(req.provider, req.api_key, _config)
+    _orchestrator = FailoverOrchestrator(_config)
+    return {"status": "ok", "provider": req.provider}
+
+
+@app.post("/providers/key/remove")
+async def remove_key(req: RemoveKeyRequest):
+    """Remove an API key for a provider."""
+    global _config, _orchestrator
+    if req.provider not in _config.providers:
+        raise HTTPException(status_code=404, detail=f"Provider '{req.provider}' not found")
+    _config = remove_api_key(req.provider, _config)
     _orchestrator = FailoverOrchestrator(_config)
     return {"status": "ok", "provider": req.provider}
 
