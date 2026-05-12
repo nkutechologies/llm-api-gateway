@@ -7,7 +7,7 @@
       "id": "groq",
       "name": "Groq",
       "enabled": true,
-      "priority": 1,
+      "priority": 2,
       "tier": "free",
       "base_url": "https://api.groq.com/openai/v1",
       "models": [
@@ -65,7 +65,7 @@
       "id": "cerebras",
       "name": "Cerebras",
       "enabled": true,
-      "priority": 4,
+      "priority": 3,
       "tier": "free",
       "base_url": "https://api.cerebras.ai/v1",
       "models": [
@@ -82,7 +82,7 @@
       "id": "google",
       "name": "Google Gemini",
       "enabled": true,
-      "priority": 5,
+      "priority": 4,
       "tier": "free",
       "base_url": "https://generativelanguage.googleapis.com/v1beta",
       "models": [
@@ -99,7 +99,7 @@
       "id": "mistral",
       "name": "Mistral",
       "enabled": true,
-      "priority": 6,
+      "priority": 5,
       "tier": "free",
       "base_url": "https://api.mistral.ai/v1",
       "models": [
@@ -119,7 +119,7 @@
       "id": "openrouter",
       "name": "OpenRouter",
       "enabled": true,
-      "priority": 7,
+      "priority": 6,
       "tier": "free",
       "base_url": "https://openrouter.ai/api/v1",
       "models": [
@@ -135,11 +135,103 @@
       "timeout": 60,
       "rate_limit_rpm": 20
     },
+    "sambanova": {
+      "id": "sambanova",
+      "name": "SambaNova",
+      "enabled": true,
+      "priority": 8,
+      "tier": "free",
+      "base_url": "https://api.sambanova.ai/v1",
+      "models": [
+        "Meta-Llama-3.3-70B-Instruct",
+        "Meta-Llama-3.1-405B-Instruct",
+        "Meta-Llama-3.1-8B-Instruct",
+        "DeepSeek-R1-Distill-Llama-70B",
+        "Qwen2.5-72B-Instruct"
+      ],
+      "selected_model": "Meta-Llama-3.1-405B-Instruct",
+      "max_retries": 2,
+      "timeout": 60,
+      "rate_limit_rpm": 30
+    },
+    "deepseek": {
+      "id": "deepseek",
+      "name": "DeepSeek",
+      "enabled": true,
+      "priority": 9,
+      "tier": "free",
+      "base_url": "https://api.deepseek.com/v1",
+      "models": [
+        "deepseek-chat",
+        "deepseek-reasoner"
+      ],
+      "selected_model": "deepseek-reasoner",
+      "max_retries": 2,
+      "timeout": 60,
+      "rate_limit_rpm": 60
+    },
+    "fireworks": {
+      "id": "fireworks",
+      "name": "Fireworks AI",
+      "enabled": true,
+      "priority": 10,
+      "tier": "free",
+      "base_url": "https://api.fireworks.ai/inference/v1",
+      "models": [
+        "accounts/fireworks/models/llama-v3p3-70b-instruct",
+        "accounts/fireworks/models/llama-v3p1-405b-instruct",
+        "accounts/fireworks/models/mixtral-8x22b-instruct",
+        "accounts/fireworks/models/qwen2p5-72b-instruct",
+        "accounts/fireworks/models/deepseek-r1"
+      ],
+      "selected_model": "accounts/fireworks/models/llama-v3p1-405b-instruct",
+      "max_retries": 2,
+      "timeout": 60,
+      "rate_limit_rpm": 60
+    },
+    "nvidia": {
+      "id": "nvidia",
+      "name": "Nvidia NIM",
+      "enabled": true,
+      "priority": 1,
+      "tier": "free",
+      "base_url": "https://integrate.api.nvidia.com/v1",
+      "models": [
+        "meta/llama-3.3-70b-instruct",
+        "meta/llama-3.1-405b-instruct",
+        "nvidia/llama-3.1-nemotron-70b-instruct",
+        "mistralai/mixtral-8x22b-instruct-v0.1",
+        "google/gemma-2-27b-it"
+      ],
+      "selected_model": "meta/llama-3.3-70b-instruct",
+      "max_retries": 2,
+      "timeout": 60,
+      "rate_limit_rpm": 30
+    },
+    "cloudflare": {
+      "id": "cloudflare",
+      "name": "Cloudflare Workers AI",
+      "enabled": true,
+      "priority": 12,
+      "tier": "free",
+      "base_url": "https://api.cloudflare.com",
+      "models": [
+        "@cf/meta/llama-3.3-70b-instruct-fp8-fast",
+        "@cf/meta/llama-3.1-8b-instruct",
+        "@cf/mistral/mistral-7b-instruct-v0.2-lora",
+        "@cf/google/gemma-7b-it-lora",
+        "@cf/deepseek-ai/deepseek-r1-distill-qwen-32b"
+      ],
+      "selected_model": "@cf/meta/llama-3.3-70b-instruct-fp8-fast",
+      "max_retries": 2,
+      "timeout": 60,
+      "rate_limit_rpm": 300
+    },
     "ollama": {
       "id": "ollama",
       "name": "Ollama (Local)",
       "enabled": true,
-      "priority": 8,
+      "priority": 7,
       "tier": "free",
       "base_url": "http://localhost:11434",
       "models": [

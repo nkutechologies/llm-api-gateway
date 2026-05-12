@@ -53,6 +53,11 @@ class SelectModelRequest(BaseModel):
     model: str
 
 
+class ReorderProvidersRequest(BaseModel):
+    """List of provider IDs in desired failover order, per tier."""
+    order: list[str]  # e.g. ["groq", "google", "cerebras", ...]
+
+
 # ---------- App lifecycle ----------
 
 _config: GatewayConfig = None  # type: ignore
@@ -170,6 +175,18 @@ async def select_model(req: SelectModelRequest):
     save_config(_config)
     _orchestrator = FailoverOrchestrator(_config)
     return {"status": "ok", "provider": req.provider, "model": req.model}
+
+
+@app.post("/providers/reorder")
+async def reorder_providers(req: ReorderProvidersRequest):
+    """Reorder providers by assigning new priorities based on the given order."""
+    global _config, _orchestrator
+    for i, provider_id in enumerate(req.order):
+        if provider_id in _config.providers:
+            _config.providers[provider_id].priority = i + 1
+    save_config(_config)
+    _orchestrator = FailoverOrchestrator(_config)
+    return {"status": "ok", "order": req.order}
 
 
 @app.get("/logs")

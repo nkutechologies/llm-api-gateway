@@ -213,15 +213,60 @@ with tab2:
     # Show failover order
     st.divider()
     st.markdown("### 🔄 Current Failover Order")
+    st.caption("Drag to reorder. Free and paid providers are ordered separately.")
+
     active = [p for p in providers if p["has_key"] and p["enabled"]]
     free_active = sorted([p for p in active if p["tier"] == "free"], key=lambda x: x["priority"])
     paid_active = sorted([p for p in active if p["tier"] == "paid"], key=lambda x: x["priority"])
-    order = free_active + paid_active
 
-    if order:
-        for i, p in enumerate(order, 1):
-            tier_badge = "🆓" if p["tier"] == "free" else "💰"
-            st.markdown(f"{i}. {tier_badge} **{p['name']}** → `{p['selected_model']}`")
+    if free_active or paid_active:
+        # --- Free tier reorder ---
+        if free_active:
+            st.markdown("**🆓 Free Tier Order:**")
+            free_col1, free_col2 = st.columns([3, 1])
+            with free_col1:
+                for i, p in enumerate(free_active):
+                    cols = st.columns([1, 6, 2, 2])
+                    cols[0].markdown(f"**{i+1}.**")
+                    cols[1].markdown(f"**{p['name']}** → `{p['selected_model']}`")
+                    if i > 0:
+                        if cols[2].button("⬆️", key=f"up_free_{p['id']}"):
+                            # Swap with previous
+                            order = [x["id"] for x in free_active]
+                            order[i], order[i-1] = order[i-1], order[i]
+                            api_post("/providers/reorder", {"order": order})
+                            st.rerun()
+                    else:
+                        cols[2].write("")
+                    if i < len(free_active) - 1:
+                        if cols[3].button("⬇️", key=f"down_free_{p['id']}"):
+                            # Swap with next
+                            order = [x["id"] for x in free_active]
+                            order[i], order[i+1] = order[i+1], order[i]
+                            api_post("/providers/reorder", {"order": order})
+                            st.rerun()
+
+        # --- Paid tier reorder ---
+        if paid_active:
+            st.markdown("**💰 Paid Tier Order:**")
+            for i, p in enumerate(paid_active):
+                cols = st.columns([1, 6, 2, 2])
+                cols[0].markdown(f"**{i+1}.**")
+                cols[1].markdown(f"**{p['name']}** → `{p['selected_model']}`")
+                if i > 0:
+                    if cols[2].button("⬆️", key=f"up_paid_{p['id']}"):
+                        order = [x["id"] for x in paid_active]
+                        order[i], order[i-1] = order[i-1], order[i]
+                        api_post("/providers/reorder", {"order": order})
+                        st.rerun()
+                else:
+                    cols[2].write("")
+                if i < len(paid_active) - 1:
+                    if cols[3].button("⬇️", key=f"down_paid_{p['id']}"):
+                        order = [x["id"] for x in paid_active]
+                        order[i], order[i+1] = order[i+1], order[i]
+                        api_post("/providers/reorder", {"order": order})
+                        st.rerun()
     else:
         st.warning("No active providers. Add API keys in the sidebar to get started.")
 

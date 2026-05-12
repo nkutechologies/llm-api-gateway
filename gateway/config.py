@@ -202,12 +202,11 @@ DEFAULT_PROVIDERS: dict[str, dict] = {
         "base_url": "https://integrate.api.nvidia.com/v1",
         "models": [
             "meta/llama-3.3-70b-instruct",
-            "meta/llama-3.1-405b-instruct",
             "nvidia/llama-3.1-nemotron-70b-instruct",
             "mistralai/mixtral-8x22b-instruct-v0.1",
             "google/gemma-2-27b-it",
         ],
-        "selected_model": "meta/llama-3.1-405b-instruct",
+        "selected_model": "meta/llama-3.3-70b-instruct",
         "rate_limit_rpm": 30,
     },
     "cloudflare": {
@@ -341,8 +340,15 @@ def load_config() -> GatewayConfig:
             pass
 
     # Ollama doesn't need an API key — set a placeholder so it's eligible
+    # Only enable if Ollama is actually reachable
     if config.providers["ollama"].enabled and not config.providers["ollama"].api_key:
-        config.providers["ollama"].api_key = "local"
+        try:
+            import httpx
+            resp = httpx.get(config.providers["ollama"].base_url or "http://localhost:11434", timeout=2)
+            if resp.status_code == 200:
+                config.providers["ollama"].api_key = "local"
+        except Exception:
+            config.providers["ollama"].enabled = False
 
     return config
 
@@ -374,6 +380,7 @@ def save_config(config: GatewayConfig):
 
 def update_api_key(provider_id: str, api_key: str, config: GatewayConfig) -> GatewayConfig:
     """Update a single provider's API key."""
+    api_key = api_key.strip()
     if provider_id in config.providers:
         config.providers[provider_id].api_key = api_key
         save_config(config)
