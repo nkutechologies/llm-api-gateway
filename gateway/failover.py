@@ -23,6 +23,11 @@ from gateway.providers.cerebras_provider import CerebrasProvider
 from gateway.providers.google_provider import GoogleProvider
 from gateway.providers.mistral_provider import MistralProvider
 from gateway.providers.openrouter_provider import OpenRouterProvider
+from gateway.providers.sambanova_provider import SambaNovaProvider
+from gateway.providers.deepseek_provider import DeepSeekProvider
+from gateway.providers.fireworks_provider import FireworksProvider
+from gateway.providers.nvidia_provider import NvidiaProvider
+from gateway.providers.cloudflare_provider import CloudflareProvider
 from gateway.providers.openai_provider import OpenAIProvider
 from gateway.providers.anthropic_provider import AnthropicProvider
 from gateway.providers.cohere_provider import CohereProvider
@@ -37,6 +42,11 @@ PROVIDER_CLASSES: dict[str, type[BaseProvider]] = {
     "google": GoogleProvider,
     "mistral": MistralProvider,
     "openrouter": OpenRouterProvider,
+    "sambanova": SambaNovaProvider,
+    "deepseek": DeepSeekProvider,
+    "fireworks": FireworksProvider,
+    "nvidia": NvidiaProvider,
+    "cloudflare": CloudflareProvider,
     "ollama": OllamaProvider,
     "openai": OpenAIProvider,
     "anthropic": AnthropicProvider,
